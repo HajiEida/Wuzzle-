@@ -24,3 +24,5 @@ class Wuzzle:
             return True
         else:
             return False
+
+            # Hamza Sajjad
