@@ -5,8 +5,14 @@ def main():
 
     while wuzzle.can_attempt():
         x = input("GUESS: ")
-        wuzzle.attempt(x)
 
+        if len(x) != wuzzle.max_word_length:
+            print(f"Word must be of {wuzzle.max_word_length} LETTERS")
+            continue
+        
+        wuzzle.attempt(x)
+        result = wuzzle.guess(x)
+        print(*result, sep="\n")
     if wuzzle.is_solved():
         print("correct")
     else:
