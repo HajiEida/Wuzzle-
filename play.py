@@ -2,10 +2,10 @@ from logic import Wuzzle
 from colorama import Fore
 
 def main():
-    wuzzle = Wuzzle("rayan")
+    wuzzle=Wuzzle("rayan")
 
     while wuzzle.can_attempt():
-        x = input("GUESS: ")
+        x=input("GUESS: ")
 
 
         if len(x) != wuzzle.max_word_length:
@@ -15,7 +15,7 @@ def main():
             continue
         
         wuzzle.attempt(x)
-        result = wuzzle.guess(x)
+        result=wuzzle.guess(x)
         print(*result, sep="\n")
 
     if wuzzle.is_solved():
