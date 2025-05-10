@@ -4,9 +4,13 @@ import hashlib
 import re
 from logic import Wuzzle
 from word_generator import WordGenerator
+<<<<<<< HEAD
 from ai_solver import AISolver  # Import the solver
+=======
+from ai_solver import AISolver
+from archive import init_archive_db, archive_guess, get_user_archive
+>>>>>>> 4870fa4119112ddd01a8626c9e282a7440ce1ce0
 
-# Initialize components
 if 'word_generator' not in st.session_state:
     st.session_state.word_generator = WordGenerator()
 
