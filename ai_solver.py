@@ -35,9 +35,16 @@ class AISolver:
         if not self.guess_history:
             return "CRANE", "First guess: Using optimal starting word 'CRANE'"
 
+<<<<<<< HEAD
         if len(self.possible_words) > 200:
             return self._select_by_letter_frequency()
 
+=======
+
+        if len(self.possible_words) > 200:
+            return self._select_by_letter_frequency()
+
+>>>>>>> e50314dbf9f895158dade16c0656fd232055fbef
     
         return self._select_by_minimax()
 

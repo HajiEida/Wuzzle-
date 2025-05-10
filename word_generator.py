@@ -4,39 +4,52 @@ import nltk
 from nltk.corpus import words as nltk_words
 
 
-nltk.download('words')
+nltk.download('words') 
 class WordGenerator:
     def __init__(self):
-        self.valid_words = [w.upper() for w in nltk_words.words() if len(w) == 5 and w.isalpha()]
+        self.valid_words = []
+
+        for word in nltk_words.words():
+            if len(word) == 5 and word.isalpha():
+                self.valid_words.append(word.upper())
         
         self.position_probs = self._train_probability_model()
 
     def _train_probability_model(self):
-        """Calculate how often each letter appears in each position"""
-        position_probs = [{} for _ in range(5)]
+        position_probs = []
 
-        for pos in range(5):
-            counter = Counter(word[pos] for word in self.valid_words)
+        for i in range(5):
+            position_probs.append({}) 
+
+        for pos in range(5):  
+            counter = Counter()
+
+            for word in self.valid_words:
+                letter = word[pos]  
+                counter[letter] += 1  
             total_letters = sum(counter.values())
             
-            position_probs[pos] = {char: count/total_letters 
-                                    for char, count in counter.items()}
+            position_prob_dict = {}
+
+            for char, count in counter.items():
+                probability = count / total_letters
+                position_prob_dict[char] = probability
+                position_probs[pos] = position_prob_dict
         return position_probs
 
     def generate_word(self):
-        """Generate a word using letter probabilities"""
-        for _ in range(100):
-            letters = [
-                random.choices(
-                    list(self.position_probs[pos].keys()),
-                    weights=list(self.position_probs[pos].values())
-                )[0]
-                for pos in range(5)
-            ]
+
+        while True:
+            letters = []
+            for pos in range(5):  
+                possible_letters = list(self.position_probs[pos].keys())
+                letter_weights = list(self.position_probs[pos].values())
+                
+                chosen_letter = random.choices(possible_letters, weights=letter_weights)[0]
+                letters.append(chosen_letter)
+            
             candidate = ''.join(letters)
             
             if candidate in self.valid_words:
                 return candidate
-        
-        return random.choice(self.valid_words)
-
+            

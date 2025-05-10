@@ -5,9 +5,14 @@ import re
 import pandas as pd
 from logic import Wuzzle
 from word_generator import WordGenerator
+<<<<<<< HEAD
 from ai_solver import AISolver
 from archive import init_archive_db, archive_guess, get_user_archive
+=======
+from ai_solver import AISolver  # Import the solver
+>>>>>>> e50314dbf9f895158dade16c0656fd232055fbef
 
+# Initialize components
 if 'word_generator' not in st.session_state:
     st.session_state.word_generator = WordGenerator()
 
