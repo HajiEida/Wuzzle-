@@ -1,5 +1,5 @@
 from letters import Letter_state
-
+from collections import defaultdict
 class Wuzzle:
     max_word_length=5
     max_attempts=6
@@ -15,17 +15,27 @@ class Wuzzle:
         self.attempts.append(word.upper())
 
     def guess(self, word: str):
-        word=word.upper()
-        result=[]
+        word = word.upper()
+        result = []
+        secret_counts = defaultdict(int)
+
+        for ch in self.secret:
+            secret_counts[ch] += 1
 
         for i in range(self.max_word_length):
-            char=word[i]
-            letter=Letter_state(char)
-            if char in self.secret:
-                letter.in_word=True
-            if char == self.secret[i]:
-                letter.in_position=True
-            result.append(letter)
+            result.append(Letter_state(word[i]))
+
+        for i in range(self.max_word_length):
+            if word[i] == self.secret[i]:
+                result[i].in_position = True
+                result[i].in_word = True
+                secret_counts[word[i]] -= 1
+
+        for i in range(self.max_word_length):
+            if not result[i].in_position and secret_counts[word[i]] > 0:
+                result[i].in_word = True
+                secret_counts[word[i]] -= 1
+
         return result
 
     def remaining_attempts(self):
